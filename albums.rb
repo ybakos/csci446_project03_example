@@ -25,7 +25,10 @@ class AlbumApp
     response.write "order: #{request.params['order']}\n"
     response.write "rank: #{request.params['rank']}\n"
     File.open("list_top.html", "rb") { |template| response.write(template.read) }
-    File.open("top_100_albums.txt", "rb") { |list| response.write(list.read) }
+
+    albums = File.readlines("top_100_albums.txt")
+    albums.each_with_index { |album, i| response.write("\t<tr>\n\t\t<td>#{i + 1}</td>\n\t\t<td>#{album.chomp}</td>\n\t</tr>\n")}
+
     File.open("list_bottom.html", "rb") { |template| response.write(template.read) }
     response.finish
   end
