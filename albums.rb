@@ -24,7 +24,9 @@ class AlbumApp
     response.write "Params: #{request.params}\n"
     response.write "order: #{request.params['order']}\n"
     response.write "rank: #{request.params['rank']}\n"
+    File.open("list_top.html", "rb") { |template| response.write(template.read) }
     File.open("top_100_albums.txt", "rb") { |list| response.write(list.read) }
+    File.open("list_bottom.html", "rb") { |template| response.write(template.read) }
     response.finish
   end
 
