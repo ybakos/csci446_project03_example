@@ -13,7 +13,9 @@ class AlbumApp
 
   def render_form(request)
     response = Rack::Response.new
-    File.open("form.html", "rb") { |form| response.write(form.read) }
+    File.open("form_top.html", "rb") { |form| response.write(form.read) }
+    (1..100).each { |i| response.write("<option value=\"#{i}\">#{i}</option>\n") }
+    File.open("form_bottom.html", "rb") { |form| response.write(form.read) }
     response.finish
   end
 
