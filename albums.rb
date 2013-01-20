@@ -20,7 +20,10 @@ class AlbumApp
   end
 
   def render_list(request)
-    response = Rack::Response.new(request.path)
+    response = Rack::Response.new
+    response.write "Params: #{request.params}\n"
+    response.write "order: #{request.params['order']}\n"
+    response.write "rank: #{request.params['rank']}\n"
     response.finish
   end
 
