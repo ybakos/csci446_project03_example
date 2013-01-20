@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'rack'
+require_relative 'album'
 
 class AlbumApp
   def call(env)
@@ -26,10 +27,15 @@ class AlbumApp
     response.write "rank: #{request.params['rank']}\n"
     File.open("list_top.html", "rb") { |template| response.write(template.read) }
 
-    albums = File.readlines("top_100_albums.txt")
-    albums.map! { |album| album.split(',') }
+    albums = File.readlines("top_100_albums.txt").each_with_index.map { |record, i| Album.new(i + 1, record) }
 
-    albums.each_with_index { |album, i| response.write("\t<tr>\n\t\t<td>#{i + 1}</td>\n\t\t<td>#{album[0]}</td>\n\t\t<td>#{album[1]}</td>\n\t</tr>\n")}
+    albums.each do |album|
+      response.write("\t<tr>\n")
+      response.write("\t\t<td>#{album.rank}</td>\n")
+      response.write("\t\t<td>#{album.title}</td>\n")
+      response.write("\t\t<td>#{album.year}</td>\n")
+      response.write("\t</tr>\n")
+    end
 
     File.open("list_bottom.html", "rb") { |template| response.write(template.read) }
     response.finish
