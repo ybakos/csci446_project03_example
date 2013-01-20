@@ -27,7 +27,9 @@ class AlbumApp
     File.open("list_top.html", "rb") { |template| response.write(template.read) }
 
     albums = File.readlines("top_100_albums.txt")
-    albums.each_with_index { |album, i| response.write("\t<tr>\n\t\t<td>#{i + 1}</td>\n\t\t<td>#{album.chomp}</td>\n\t</tr>\n")}
+    albums.map! { |album| album.split(',') }
+
+    albums.each_with_index { |album, i| response.write("\t<tr>\n\t\t<td>#{i + 1}</td>\n\t\t<td>#{album[0]}</td>\n\t\t<td>#{album[1]}</td>\n\t</tr>\n")}
 
     File.open("list_bottom.html", "rb") { |template| response.write(template.read) }
     response.finish
