@@ -13,3 +13,11 @@
   </select>
   <label for="rank">Select a Rank to Highlight</label>
   <select name="rank">
+  <% (1..NUMBER_OF_ALBUMS).each do |i| %>
+  <%= "<option value=\"#{i}\">#{i}</option>\n" %>
+  <% end %>
+  </select>
+  <input type="submit" value="Display List">
+</form>
+</body>
+</html>

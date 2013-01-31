@@ -2,6 +2,9 @@
 require 'rack'
 require_relative 'album'
 
+NUMBER_OF_ALBUMS = 100
+FORM_ERB = "form.html.erb"
+
 class AlbumApp
   def call(env)
     request = Rack::Request.new(env)
@@ -14,9 +17,7 @@ class AlbumApp
 
   def render_form(request)
     response = Rack::Response.new
-    File.open("form_top.html", "rb") { |form| response.write(form.read) }
-    (1..100).each { |i| response.write("<option value=\"#{i}\">#{i}</option>\n") }
-    File.open("form_bottom.html", "rb") { |form| response.write(form.read) }
+    response.write(ERB.new(File.read(FORM_ERB)).result(binding))
     response.finish
   end
 
