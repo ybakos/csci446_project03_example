@@ -60,4 +60,5 @@ class AlbumApp
 
 end
 
+Signal.trap('INT') { Rack::Handler::WEBrick.shutdown } # Ctrl-C to quit
 Rack::Handler::WEBrick.run AlbumApp.new, :Port => 8080
