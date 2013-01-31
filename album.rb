@@ -2,10 +2,10 @@ class Album
 
   attr_accessor :rank, :title, :year
 
-  def initialize(rank, raw_string)
+  def initialize(rank, title, year)
     @rank = rank
-    @title, raw_year = raw_string.split(',')
-    @year = raw_year[/\d+/].to_i
+    @title = title
+    @year = year
   end
 
 end
